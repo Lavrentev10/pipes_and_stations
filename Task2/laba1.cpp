@@ -194,9 +194,9 @@ auto edit_pipe(vector<vector<string>> pipestoedit){
     pipenum, paramnum;
     int editcheck;
     bool editswitch = false;
-
+    bool pipenumcheck = true;
     //cout << pipestoedit[0].size() << endl;
-    while (true)
+    while (pipenumcheck)
     {
         editcheck = 0;
         cout << "Pipe number > ";
@@ -205,7 +205,6 @@ auto edit_pipe(vector<vector<string>> pipestoedit){
         for (int x = 0; x < pipenum.length(); x ++){
             if (isdigit(pipenum[x]) == false){
                 editcheck += 1;
-                break;
             }
         }
         //cout << "editcheck" << editcheck << endl;
@@ -215,7 +214,9 @@ auto edit_pipe(vector<vector<string>> pipestoedit){
             //cout << stoi(pipenum) << endl;
             if (stoi(pipenum) >= 1 && stoi(pipenum) <= pipestoedit[0].size()){
                 editswitch = true;
-                break;
+                pipenumcheck = false;
+            } else{
+                cout << "Pipe number is out of range\nYou have " << pipestoedit[0].size() << " pipes" << endl;
             }
     
         }
@@ -322,9 +323,10 @@ auto edit_css(vector<vector<string>> csstoedit){
     csnum, paramnum;
     int editcheck;
     bool editswitch = false;
+    bool cseditcheck = true;
 
     //cout << pipestoedit[0].size() << endl;
-    while (true)
+    while (cseditcheck)
     {
         editcheck = 0;
         cout << "Station number > ";
@@ -333,7 +335,6 @@ auto edit_css(vector<vector<string>> csstoedit){
         for (int x = 0; x < csnum.length(); x ++){
             if (isdigit(csnum[x]) == false){
                 editcheck += 1;
-                break;
             }
         }
         //cout << "editcheck" << editcheck << endl;
@@ -343,7 +344,9 @@ auto edit_css(vector<vector<string>> csstoedit){
             //cout << stoi(pipenum) << endl;
             if (stoi(csnum) >= 1 && stoi(csnum) <= csstoedit[4].size()){
                 editswitch = true;
-                break;
+                cseditcheck = false;
+            } else {
+                cout << "Station number is out of range.\nYou have " << csstoedit[4].size() << " stations." << endl;
             }
     
         }
