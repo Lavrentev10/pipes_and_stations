@@ -66,37 +66,47 @@ void add_pipe_function(){
 
     bool correct_input{0};
     int bool_input_check;
-    string new_pipe_name, new_pipe_dim, new_pipe_len, new_pipe_stat;
+    string new_pipe_name, new_pipe_dim, new_pipe_len, new_pipe_stat,temp_pipe_stat_to_lower;
 
-    cout << "Pipe name > ";
-    getline(cin, new_pipe_name);
+    while (true)
+    {
+        cout << "Pipe name > ";
+        getline(cin, new_pipe_name);
 
-    while(correct_input != 1){
+        if (new_pipe_name.length() > 0){
+            break;
+        }
+    }
+
+    while(true){
         cout << "Pipe length > ";
         getline(cin, new_pipe_len);
 
-        correct_input = int_input_check(new_pipe_len);
-
-        if (correct_input == 0){
+        if(int_input_check(new_pipe_len) == 1){
+            if (stoi(new_pipe_len) > 0){
+                break;
+            } else {
+                cout << "Invalid value" << endl;
+            }
+        } else{
             cout << "Warning! Length should be an intager" << endl;
-        } 
+        }
     }
 
-    cout << new_pipe_len << endl;
-    correct_input = 0;
-
-    while(correct_input != 1){
+    while(true){
         cout << "Pipe dimameter > ";
         getline(cin, new_pipe_dim);
 
-        correct_input = int_input_check(new_pipe_dim);
-
-        if (correct_input == 0){
+        if (int_input_check(new_pipe_dim) == 1){
+            if (stoi(new_pipe_dim) > 0) {
+                break;
+            } else{
+                cout << "Invalid value" << endl;
+            }
+        }
             cout << "Warning! Diameter should be an intager" << endl;
-        } 
-    }
 
-    cout << new_pipe_dim << endl;
+    }
 
     while(true){
         cout << "Repair status [Y/N] > ";
@@ -107,13 +117,19 @@ void add_pipe_function(){
         if (bool_input_check == 2){
             cout << "Warning! Invalid value" << endl;
         } else{
+            temp_pipe_stat_to_lower = new_pipe_stat;
+
+            transform(temp_pipe_stat_to_lower.begin(),
+                temp_pipe_stat_to_lower.end(), temp_pipe_stat_to_lower.begin(),
+                [](unsigned char c_pipe_stat)
+                {return tolower(c_pipe_stat);});
+
             correct_input = bool_input_check;
             break;
         }
-        cout << bool_input_check << endl;
     }
 
-    pipe_vecor.push_back(pipe_structure{new_pipe_name,stoi(new_pipe_len), stoi(new_pipe_dim), new_pipe_stat});
+    pipe_vecor.push_back(pipe_structure{new_pipe_name,stoi(new_pipe_len), stoi(new_pipe_dim), temp_pipe_stat_to_lower});
 
     cout << "\nNew pipe #" << pipe_vecor.size()<< "\nName: " 
     << pipe_vecor[pipe_vecor.size()-1].name <<"\nLength: " 
@@ -128,8 +144,15 @@ void add_cs_function(){
     bool correct_input{0};
     string new_cs_name, new_cs_workshops, new_cs_workshops_in_work, new_cs_efficiency;
 
-    cout << "Station name > ";
-    getline(cin, new_cs_name);
+    while (true)
+    {
+        cout << "Station name > ";
+        getline(cin, new_cs_name);
+
+        if (new_cs_name.length() > 0){
+            break;
+        }
+    }
 
     while(correct_input != 1){
         cout << "Workshops > ";
@@ -372,12 +395,14 @@ void view_all_entities(){
 
             while (true)
             {
-                cout << "1 - Lower than " << cs_search_percentage << "%\n2 - Higher than " << cs_search_percentage << "%\n > ";
+                cout << "1 - Lower than " << cs_search_percentage << "%\n2 - Higher than "
+                 << cs_search_percentage << "%\n > ";
                 getline(cin, cs_percentage_low_or_high);
                 if (int_input_check(cs_percentage_low_or_high) == 1){
                     if (stoi(cs_percentage_low_or_high) == 1){
                         for (int i = 0; i < cs_vecor.size(); i++){
-                            if ((cs_vecor[i].workshops - cs_vecor[i].workshops_in_work)/cs_vecor[i].workshops < stoi(cs_percentage_low_or_high)){
+                            if ((cs_vecor[i].workshops - cs_vecor[i].workshops_in_work)/cs_vecor[i].workshops 
+                            < stoi(cs_percentage_low_or_high)){
                                 cout << cs_vecor[i].name << endl;
                                 cout << cs_vecor[i].workshops << endl;
                                 cout << cs_vecor[i].workshops_in_work << endl;
@@ -388,7 +413,8 @@ void view_all_entities(){
                         break;
                     } else if (stoi(cs_percentage_low_or_high) == 2){
                         for (int i = 0; i < cs_vecor.size(); i++){
-                            if ((cs_vecor[i].workshops - cs_vecor[i].workshops_in_work)/cs_vecor[i].workshops > stoi(cs_percentage_low_or_high)){
+                            if ((cs_vecor[i].workshops - cs_vecor[i].workshops_in_work)/cs_vecor[i].workshops 
+                            > stoi(cs_percentage_low_or_high)){
                                 cout << cs_vecor[i].name << endl;
                                 cout << cs_vecor[i].workshops << endl;
                                 cout << cs_vecor[i].workshops_in_work << endl;
@@ -429,6 +455,129 @@ void view_all_entities(){
 }
 
 void edit_pipes(){
+    string pipe_id_to_edit, pipe_parameter_to_edit, new_pipe_name, new_pipe_lenght, new_pipe_diameter,
+    new_pipe_repair_stat,temp_pipe_stat_to_lower;
+
+    while (true)
+    {
+        cout << "Id of pipe ("<< pipe_vecor.size()<<" pipes in stock)\n(press enter to exit) > ";
+        getline(cin, pipe_id_to_edit);
+        if (pipe_id_to_edit.length() == 0){
+            break;
+        }
+        if (int_input_check(pipe_id_to_edit) == 1){
+            if (stoi(pipe_id_to_edit)-1 >= 0 && stoi(pipe_id_to_edit)-1 < pipe_vecor.size()){
+                break;
+            } else {
+                cout << "Out of range" << endl;
+            }
+        } else {
+            cout << "Integer expected" << endl;
+        }
+    }
+    if (pipe_id_to_edit.length() != 0){
+        cout << "Pipe #" << pipe_id_to_edit << ":"<< endl;
+        cout << pipe_vecor[stoi(pipe_id_to_edit)-1].name << endl;
+        cout << pipe_vecor[stoi(pipe_id_to_edit)-1].length << endl;
+        cout << pipe_vecor[stoi(pipe_id_to_edit)-1].diameter << endl;
+        cout << pipe_vecor[stoi(pipe_id_to_edit)-1].repair_status << endl;
+        cout << "\n" << endl;
+
+    } else {
+        return;   
+    }
+
+    while (true)
+    {
+        cout << "Select parameter of pipe:\n1 - Name\n2 - Length\n3 - Diameter\n4 - Repair status\n > ";
+        getline(cin, pipe_parameter_to_edit);
+
+        if (int_input_check(pipe_parameter_to_edit) == 1){
+            if (stoi(pipe_parameter_to_edit) >= 1 && stoi(pipe_parameter_to_edit) <= 4){
+                break;
+            } else {
+                cout << "Out of range" << endl;
+            }
+        } else {
+            cout << "Integer expected" << endl;
+        }
+    }
+
+    switch (stoi(pipe_parameter_to_edit))
+    {
+    case 1:
+        while (true)
+        {
+            cout << "New pipe name > ";
+            getline(cin, new_pipe_name);
+
+            if (new_pipe_name.length() > 0){
+                pipe_vecor[stoi(pipe_id_to_edit)-1].name = new_pipe_name;
+                break;
+            } else {
+                cout << "Name cannot be empty" << endl;
+            }
+        }
+        
+        break;
+    case 2:
+        while (true)
+        {
+            cout << "New pipe length > ";
+            getline(cin, new_pipe_lenght);
+
+            if (int_input_check(new_pipe_lenght) == 1){
+                if (stoi(new_pipe_lenght) > 0){
+                    pipe_vecor[stoi(pipe_id_to_edit)-1].length = stoi(new_pipe_lenght);
+                    break;
+                } else {
+                    cout << "Length should be bigger than 0";
+                }
+            } else {
+                cout << "Integer expected" << endl;
+            }
+        }
+        
+        break;
+    case 3:
+        while (true)
+        {
+            cout << "New pipe diameter > ";
+            getline(cin, new_pipe_diameter);
+
+            if (int_input_check(new_pipe_diameter) == 1){
+                if (stoi(new_pipe_diameter) > 0){
+                    pipe_vecor[stoi(pipe_id_to_edit)-1].diameter = stoi(new_pipe_diameter);
+                    break;
+                } else {
+                    cout << "Diameter should be bigger than 0";
+                }
+            } else {
+                cout << "Integer expected" << endl;
+            }
+        }
+        break;
+    case 4:
+        while(true){
+        cout << "Repair status [Y/N] > ";
+        getline(cin, new_pipe_repair_stat);
+
+        if (yes_no_input_check(new_pipe_repair_stat) == 2){
+            cout << "Warning! Invalid value" << endl;
+        } else{
+            temp_pipe_stat_to_lower = new_pipe_repair_stat;
+
+            transform(temp_pipe_stat_to_lower.begin(),
+                temp_pipe_stat_to_lower.end(), temp_pipe_stat_to_lower.begin(),
+                [](unsigned char c_pipe_stat)
+                {return tolower(c_pipe_stat);});
+            pipe_vecor[stoi(pipe_id_to_edit)-1].repair_status = temp_pipe_stat_to_lower;
+            break;
+        }
+        }
+
+        break;
+    }
 
 }
 
@@ -637,6 +786,10 @@ int main(){
             case 3:
                 view_all_entities();
 
+                break;
+            case 4:
+                edit_pipes();
+                file_saved_status = 0;
                 break;
             case 6:
                 save_file();
