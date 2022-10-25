@@ -203,12 +203,28 @@ void add_cs_function(){
     cs_vecor.push_back(cs_structure{new_cs_name,stoi(new_cs_workshops),
     stoi(new_cs_workshops_in_work), stoi(new_cs_efficiency)});
 
-    cout << "\nNew station #" << pipe_vecor.size()<<"\nName: " 
+    cout << "\nNew station #" << cs_vecor.size()<<"\nName: " 
     << cs_vecor[cs_vecor.size()-1].name << "\nWorkshops: "<< cs_vecor[cs_vecor.size()-1].workshops
     << "\nWorkshops in work: " << cs_vecor[cs_vecor.size()-1].workshops_in_work <<
     "\nEfficiency: " << cs_vecor[cs_vecor.size()-1].efficiency<< "\nhas been added successfully\n"
     << endl;
 
+}
+
+void print_pipe(int id, string name, int len, int dim, string stat){
+    cout << "\n\tPipe #" << id + 1<< ":"<< endl;
+    cout << "\tName: " << name << endl;
+    cout << "\tLength: " << len << endl;
+    cout << "\tDiameter: " << dim << endl;
+    cout << "\tRepair status: " << stat << endl;
+}
+
+void print_cs(int id, string name, int ws, int ws_i, int eff){
+    cout << "\n\tCompressor station #" << id << ":"<< endl;
+    cout << "\tName: " << name << endl;
+    cout << "\tWorkshops: " << ws << endl;
+    cout << "\tWorkshops in work: " << ws_i << endl;
+    cout << "\tEfficiency: " << eff << endl; 
 }
 
 void view_all_entities(){
@@ -260,11 +276,9 @@ void view_all_entities(){
                 } else{
                     for (int i = 0; i < pipe_vecor.size(); i++){
                         if (pipe_vecor[i].name == pipe_search_name){
-                            cout << pipe_vecor[i].name << endl;
-                            cout << pipe_vecor[i].length << endl;
-                            cout << pipe_vecor[i].diameter << endl;
-                            cout << pipe_vecor[i].repair_status << endl;
-                            cout << "\n" << endl;
+
+                            print_pipe(i, pipe_vecor[i].name,pipe_vecor[i].length,
+                            pipe_vecor[i].diameter, pipe_vecor[i].repair_status);
                         }
                     }
                     break;
@@ -280,11 +294,11 @@ void view_all_entities(){
                 getline(cin, pipe_search_id);
                 if (int_input_check(pipe_search_id) == 1){
                     if (stoi(pipe_search_id)-1 >= 0 && stoi(pipe_search_id)-1 < pipe_vecor.size()){
-                        cout << pipe_vecor[stoi(pipe_search_id)-1].name << endl;
-                        cout << pipe_vecor[stoi(pipe_search_id)-1].length << endl;
-                        cout << pipe_vecor[stoi(pipe_search_id)-1].diameter << endl;
-                        cout << pipe_vecor[stoi(pipe_search_id)-1].repair_status << endl;
-                        cout << "\n" << endl;
+
+                        print_pipe(stoi(pipe_search_id)-1, pipe_vecor[stoi(pipe_search_id)-1].name,
+                        pipe_vecor[stoi(pipe_search_id)-1].length,
+                        pipe_vecor[stoi(pipe_search_id)-1].diameter, 
+                        pipe_vecor[stoi(pipe_search_id)-1].repair_status);
                     }
                     break;
                 }
@@ -309,11 +323,8 @@ void view_all_entities(){
                 for (int i = 0; i < pipe_vecor.size(); i++){
                     if (pipe_vecor[i].repair_status == temp_pipe_stat_to_lower 
                     || pipe_vecor[i].repair_status == temp_pipe_stat_to_upper){
-                        cout << pipe_vecor[i].name << endl;
-                        cout << pipe_vecor[i].length << endl;
-                        cout << pipe_vecor[i].diameter << endl;
-                        cout << pipe_vecor[i].repair_status << endl;
-                        cout << "\n" << endl;
+                        print_pipe(i, pipe_vecor[i].name,pipe_vecor[i].length,
+                        pipe_vecor[i].diameter, pipe_vecor[i].repair_status);
                     }
                 }
                 break; 
@@ -348,11 +359,9 @@ void view_all_entities(){
                 } else{
                     for (int i = 0; i < cs_vecor.size(); i++){
                         if (cs_vecor[i].name == cs_search_name){
-                            cout << cs_vecor[i].name << endl;
-                            cout << cs_vecor[i].workshops << endl;
-                            cout << cs_vecor[i].workshops_in_work << endl;
-                            cout << cs_vecor[i].efficiency << endl;
-                            cout << "\n" << endl;
+
+                            print_cs(i, cs_vecor[i].name, cs_vecor[i].workshops,
+                            cs_vecor[i].workshops_in_work, cs_vecor[i].efficiency);
                         }
                     }
                     break;
@@ -367,11 +376,11 @@ void view_all_entities(){
                 getline(cin, cs_search_id);
                 if (int_input_check(cs_search_id) == 1){
                     if (stoi(cs_search_id)-1 >= 0 && stoi(cs_search_id)-1 < cs_vecor.size()){
-                        cout << cs_vecor[stoi(cs_search_id)-1].name << endl;
-                        cout << cs_vecor[stoi(cs_search_id)-1].workshops << endl;
-                        cout << cs_vecor[stoi(cs_search_id)-1].workshops_in_work << endl;
-                        cout << cs_vecor[stoi(cs_search_id)-1].efficiency << endl;
-                        cout << "\n" << endl;
+                
+                        print_cs(stoi(cs_search_id)-1, cs_vecor[stoi(cs_search_id)-1].name,
+                        cs_vecor[stoi(cs_search_id)-1].workshops,
+                        cs_vecor[stoi(cs_search_id)-1].workshops_in_work,
+                        cs_vecor[stoi(cs_search_id)-1].efficiency);
                     }
                     break;
                 }
@@ -408,6 +417,9 @@ void view_all_entities(){
                                 cout << cs_vecor[i].workshops_in_work << endl;
                                 cout << cs_vecor[i].efficiency << endl;
                                 cout << "\n" << endl;
+
+                                print_cs(i, cs_vecor[i].name, cs_vecor[i].workshops,
+                                cs_vecor[i].workshops_in_work, cs_vecor[i].efficiency);
                             }
                         }
                         break;
@@ -420,6 +432,9 @@ void view_all_entities(){
                                 cout << cs_vecor[i].workshops_in_work << endl;
                                 cout << cs_vecor[i].efficiency << endl;
                                 cout << "\n" << endl;
+
+                                print_cs(i, cs_vecor[i].name, cs_vecor[i].workshops, cs_vecor[i].workshops_in_work,
+                                cs_vecor[i].efficiency);
                             }
                         }
                         break;
@@ -433,21 +448,15 @@ void view_all_entities(){
         }
         break;
     case 3:
-        cout << "Pipes:\n" << endl;
+        cout << "\nPipes:\n" << endl;
         for (int i = 0; i < pipe_vecor.size(); i++){
-            cout << pipe_vecor[i].name << endl;
-            cout << pipe_vecor[i].length << endl;
-            cout << pipe_vecor[i].diameter << endl;
-            cout << pipe_vecor[i].repair_status << endl;
-            cout << "\n" << endl;
+
+            print_pipe(i, pipe_vecor[i].name, pipe_vecor[i].length, pipe_vecor[i].diameter, pipe_vecor[i].repair_status);
         }
-        cout << "Compressor stations:\n" << endl;
+        cout << "\nCompressor stations:\n" << endl;
         for (int i = 0; i < cs_vecor.size(); i++){
-            cout << cs_vecor[i].name << endl;
-            cout << cs_vecor[i].workshops << endl;
-            cout << cs_vecor[i].workshops_in_work << endl;
-            cout << cs_vecor[i].efficiency << endl;
-            cout << "\n" << endl;
+
+            print_cs(i, cs_vecor[i].name, cs_vecor[i].workshops, cs_vecor[i].workshops_in_work,cs_vecor[i].efficiency);
         }
         break;
     }
@@ -476,12 +485,9 @@ void edit_pipes(){
         }
     }
     if (pipe_id_to_edit.length() != 0){
-        cout << "Pipe #" << pipe_id_to_edit << ":"<< endl;
-        cout << pipe_vecor[stoi(pipe_id_to_edit)-1].name << endl;
-        cout << pipe_vecor[stoi(pipe_id_to_edit)-1].length << endl;
-        cout << pipe_vecor[stoi(pipe_id_to_edit)-1].diameter << endl;
-        cout << pipe_vecor[stoi(pipe_id_to_edit)-1].repair_status << endl;
-        cout << "\n" << endl;
+
+        print_pipe(stoi(pipe_id_to_edit)-1, pipe_vecor[stoi(pipe_id_to_edit)-1].name, pipe_vecor[stoi(pipe_id_to_edit)-1].length,
+        pipe_vecor[stoi(pipe_id_to_edit)-1].diameter, pipe_vecor[stoi(pipe_id_to_edit)-1].repair_status);
 
     } else {
         return;   
@@ -489,7 +495,7 @@ void edit_pipes(){
 
     while (true)
     {
-        cout << "Select parameter of pipe:\n1 - Name\n2 - Length\n3 - Diameter\n4 - Repair status\n > ";
+        cout << "\nSelect parameter of pipe:\n1 - Name\n2 - Length\n3 - Diameter\n4 - Repair status\n > ";
         getline(cin, pipe_parameter_to_edit);
 
         if (int_input_check(pipe_parameter_to_edit) == 1){
@@ -582,6 +588,130 @@ void edit_pipes(){
 }
 
 void edit_cs(){
+
+    string cs_id_to_edit, cs_parameter_to_edit, new_cs_name, new_cs_workshops,
+    new_cs_workshops_in_work, new_cs_efficiency;
+    bool correct_input{0};
+
+    while (true)
+    {
+        cout << "Id of station ("<< pipe_vecor.size()<<" stations in stock)\n(press enter to exit) > ";
+        getline(cin, cs_id_to_edit);
+        if (cs_id_to_edit.length() == 0){
+            break;
+        }
+        if (int_input_check(cs_id_to_edit) == 1){
+            if (stoi(cs_id_to_edit)-1 >= 0 && stoi(cs_id_to_edit)-1 < pipe_vecor.size()){
+                break;
+            } else {
+                cout << "Out of range" << endl;
+            }
+        } else {
+            cout << "Integer expected" << endl;
+        }
+    }
+    if (cs_id_to_edit.length() != 0){
+
+        print_cs(stoi(cs_id_to_edit)-1, cs_vecor[stoi(cs_id_to_edit)-1].name,
+        cs_vecor[stoi(cs_id_to_edit)-1].workshops, cs_vecor[stoi(cs_id_to_edit)-1].workshops_in_work,
+        cs_vecor[stoi(cs_id_to_edit)-1].efficiency);
+
+    } else {
+        return;   
+    }
+
+    while (true)
+    {
+        cout << "\nSelect parameter of pipe:\n1 - Name\n2 - Workshops\n3 - Wrokshops in work"
+        << "\n4 - Efficiency\n > ";
+        getline(cin, cs_parameter_to_edit);
+
+        if (int_input_check(cs_parameter_to_edit) == 1){
+            if (stoi(cs_parameter_to_edit) >= 1 && stoi(cs_parameter_to_edit) <= 4){
+                break;
+            } else {
+                cout << "Out of range" << endl;
+            }
+        } else {
+            cout << "Integer expected" << endl;
+        }
+    }
+
+    switch (stoi(cs_parameter_to_edit))
+    {
+    case 1:
+        while (true)
+        {
+            cout << "Station name > ";
+            getline(cin, new_cs_name);
+
+            if (new_cs_name.length() > 0){
+                break;
+            }
+        }
+        cs_vecor[stoi(cs_id_to_edit)-1].name = new_cs_name;
+        break;
+    case 2:
+        
+        while(correct_input != 1){
+            cout << "Workshops > ";
+            getline(cin, new_cs_workshops);
+
+            correct_input = int_input_check(new_cs_workshops);
+
+            if (correct_input == 0){
+                cout << "Warning! Number of workshops should be an intager" << endl;
+            } 
+        }
+
+        cs_vecor[stoi(cs_id_to_edit) - 1].workshops = stoi(new_cs_workshops);
+        
+        break;
+    case 3:
+        while (true)
+        {
+            cout << "Workshops in work > ";
+            getline(cin, new_cs_workshops_in_work);
+
+            correct_input = int_input_check(new_cs_workshops_in_work);
+
+            if (correct_input == 0){
+                cout << "Warning! Number of workshops should be an intager" << endl;
+            } else if (correct_input == 1){
+                if (stoi(new_cs_workshops_in_work) > stoi(new_cs_workshops)){
+                    cout << "Warning! Number of workshops in work cannot exceed the total number of workshops" 
+                    << endl;
+                } else{
+                    break;
+                }
+            }
+        }
+
+        cs_vecor[stoi(cs_id_to_edit) - 1].workshops_in_work = stoi(new_cs_workshops);
+        
+        break;
+    case 4:
+        while(true){
+            cout << "Efficiency in percentage > ";
+            getline(cin, new_cs_efficiency);
+
+            correct_input = int_input_check(new_cs_efficiency);
+
+            if (correct_input == 0){
+                cout << "Warning! Efficiency should be an intager" << endl;
+            } else if (correct_input == 1){
+                if (stoi(new_cs_efficiency) >= 0 && stoi(new_cs_efficiency)<= 100){
+                    break;
+                } else{
+                    cout << "Percentage value must be between 0 and 100" << endl;
+                }
+            }
+        }
+
+        cs_vecor[stoi(cs_id_to_edit) - 1].efficiency = stoi(new_cs_efficiency);
+
+        break;
+    }
 
 }
 
@@ -762,8 +892,9 @@ int menu(){
 int main(){
 
     int user_choice_in_main_menu;
-    bool program_cycle{1},file_saved_status{1};
-    string load_without_saving_string;
+    bool program_cycle{1},file_saved_status{1},load_without_save{0},success_load,
+    exit_without_saving{0};
+    string load_without_saving_string, exit_without_saving_string;
 
     while(program_cycle){
         user_choice_in_main_menu = menu();
@@ -771,9 +902,24 @@ int main(){
         switch(user_choice_in_main_menu){
             case 0:
                 if (file_saved_status == 0){
-                    cout << "Not saved" << endl;
+                    while(true){
+                        cout << "Are you sure you want to exit without saving? [Y/N] > ";
+                        getline(cin , exit_without_saving_string);
+                        if (yes_no_input_check(exit_without_saving_string) == 1){
+                            exit_without_saving = 1;
+                            break;
+                        } else if (yes_no_input_check(exit_without_saving_string) == 0){
+                            exit_without_saving = 0;
+                            break;
+                        } else {
+                            cout << "Incorrect value!" << endl;
+                        }
+                    }
                 }
-                program_cycle = 0;
+                if (file_saved_status == 1 || exit_without_saving == 1){        
+                    program_cycle = 0;
+                }
+                
                 break;
             case 1:
                 add_pipe_function();
@@ -796,8 +942,7 @@ int main(){
                 file_saved_status = 1;
                 break;
             case 7:
-                bool load_without_save{0};
-                bool success_load;
+                load_without_save = 0;
                 if (file_saved_status == 0){
                     while(true){
                         cout << "Are you sure you want to load file without saving? [Y/N] > ";
