@@ -937,6 +937,10 @@ int main(){
                 edit_pipes();
                 file_saved_status = 0;
                 break;
+            case 5:
+                edit_cs();
+                file_saved_status = 0;
+                break;
             case 6:
                 save_file();
                 file_saved_status = 1;
