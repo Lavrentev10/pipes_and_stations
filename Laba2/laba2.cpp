@@ -220,7 +220,7 @@ void print_pipe(int id, string name, int len, int dim, string stat){
 }
 
 void print_cs(int id, string name, int ws, int ws_i, int eff){
-    cout << "\n\tCompressor station #" << id << ":"<< endl;
+    cout << "\n\tCompressor station #" << id + 1<< ":"<< endl;
     cout << "\tName: " << name << endl;
     cout << "\tWorkshops: " << ws << endl;
     cout << "\tWorkshops in work: " << ws_i << endl;
@@ -595,13 +595,13 @@ void edit_cs(){
 
     while (true)
     {
-        cout << "Id of station ("<< pipe_vecor.size()<<" stations in stock)\n(press enter to exit) > ";
+        cout << "Id of station ("<< cs_vecor.size()<<" stations in stock)\n(press enter to exit) > ";
         getline(cin, cs_id_to_edit);
         if (cs_id_to_edit.length() == 0){
             break;
         }
         if (int_input_check(cs_id_to_edit) == 1){
-            if (stoi(cs_id_to_edit)-1 >= 0 && stoi(cs_id_to_edit)-1 < pipe_vecor.size()){
+            if (stoi(cs_id_to_edit)-1 >= 0 && stoi(cs_id_to_edit)-1 < cs_vecor.size()){
                 break;
             } else {
                 cout << "Out of range" << endl;
@@ -674,11 +674,11 @@ void edit_cs(){
             getline(cin, new_cs_workshops_in_work);
 
             correct_input = int_input_check(new_cs_workshops_in_work);
-
+            
             if (correct_input == 0){
                 cout << "Warning! Number of workshops should be an intager" << endl;
             } else if (correct_input == 1){
-                if (stoi(new_cs_workshops_in_work) > stoi(new_cs_workshops)){
+                if (stoi(new_cs_workshops_in_work) > cs_vecor[stoi(cs_id_to_edit) - 1].workshops){
                     cout << "Warning! Number of workshops in work cannot exceed the total number of workshops" 
                     << endl;
                 } else{
@@ -687,7 +687,7 @@ void edit_cs(){
             }
         }
 
-        cs_vecor[stoi(cs_id_to_edit) - 1].workshops_in_work = stoi(new_cs_workshops);
+        cs_vecor[stoi(cs_id_to_edit) - 1].workshops_in_work = stoi(new_cs_workshops_in_work);
         
         break;
     case 4:
